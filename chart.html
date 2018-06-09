@@ -1,63 +1,63 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
 <style>
 #moomoo {
-	width: 100%;
-	height: 100%;
-
-	margin: auto;
-	position: absolute; 
+width:100%;
+    margin: auto;
+    position: absolute; 
 }
 
 path.line {
-	fill: none;
-	stroke: gold;
-	stroke-width: 3;
+    fill: none;
+    stroke: gold;
+    stroke-width: 2;
 }
 
 g text{
-	fill: black; 
+    fill: black; 
 }
 
 </style>
 
-	<script src="https://anthemgold.com/wp-content/uploads/2018/06/d3.v4.min_.js"></script>
-	<script src="https://anthemgold.com/wp-content/uploads/2018/06/techan.min_.js"></script>
+    <script src="https://www.anthemgold.com/wp-content/uploads/2018/06/d3.v4.min_.js"></script>
+    <script src="https://www.anthemgold.com/wp-content/uploads/2018/06/techan.min_.js"></script>
 
-	<center>
-		<div id="outer">
-			<div id="moomoo" class="moomoo">
-			</div>
-		</div>
-	</center>
+    <center>
+        <div id="outer">
+            <div id="moomoo" class="moomoo">
+            </div>
+        </div>
+    </center>
 
-	<script>
+    <script>
 
-		function vwidth(){
-			return document.getElementById("moomoo").offsetWidth;
+        function vwidth(){
+      if(1==1){
+document.getElementById("moomoo").style.width = "100%";
+      }
+            return document.getElementById("moomoo").offsetWidth;
+        }
 
-		}
+        function vheight(){
+      if(1==1){
+document.getElementById("moomoo").style.height = "70vh";
+      }
+            return document.getElementById("moomoo").offsetHeight;
+        }
 
-		function vheight(){
-			return document.getElementById("moomoo").offsetHeight;
+        function toFormat(da){
+            console.log("FMT:" + da);
+            sda = new String(da);
+            sda = sda.substring(sda.indexOf(":")-2, sda.length);
+            sda = sda.substring(0, sda.indexOf(" ")-4);
+            console.log("FMT:" + sda);
+            return sda;
+        }
+        var symbol = 'BTC';
 
-		}
+        function refresh() { location.reload(); }
 
-		function toFormat(da){
-			console.log("FMT:" + da);
-			sda = new String(da);
-			sda = sda.substring(sda.indexOf(":")-2, sda.length);
-			sda = sda.substring(0, sda.indexOf(" ")-4);
-			console.log("FMT:" + sda);
-			return sda;
-		}
-		var symbol = 'BTC';
-
-		function refresh() { location.reload(); }
-
-		var margin = {top: 20, right: 20, bottom: 30, left: 50},
-		width = vwidth() - margin.left - margin.right,
-		height = (vheight()) - margin.top - margin.bottom;
+        var margin = {top: 20, right: 20, bottom: 30, left: 50},
+          width = vwidth() - margin.left - margin.right,
+        height = (vheight()) - margin.top - margin.bottom;
 
     var parseDate = d3.timeParse("%Y-%m-%d %H:%M:%S.%L"); //.parse; // d3.timeParse("%y-%b-%d");
 
@@ -84,35 +84,35 @@ g text{
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    d3.csv("https://anthemgold.com/wp-content/uploads/2018/06/data.csv", function(error, data) {
-    	var accessor = close.accessor();
+    d3.csv("https://chart.anthemgold.com/service-1.0-SNAPSHOT/DATA?symbol=BTC", function(error, data) {
+        var accessor = close.accessor();
 
-    	data = data.slice(0, 200).map(function(d) {
-    		return {
-    			date: parseDate(d.Date),
-    			open: +d.Open,
-    			high: +d.High,
-    			low: +d.Low,
-    			close: +d.Close,
-    			volume: +d.Volume
-    		};
-    	}).sort(function(a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
+        data = data.slice(0, 200).map(function(d) {
+            return {
+                date: parseDate(d.Date),
+                open: +d.Open,
+                high: +d.High,
+                low: +d.Low,
+                close: +d.Close,
+                volume: +d.Volume
+            };
+        }).sort(function(a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
 
-    	svg.append("g")
-    	.attr("class", "close");
+        svg.append("g")
+        .attr("class", "close");
 
-    	svg.append("g")
-    	.attr("class", "x axis")
-    	.attr("transform", "translate(0," + height + ")");
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")");
 
-    	svg.append("g")
-    	.attr("class", "y axis")
-    	.append("text")
-    	.attr("transform", "rotate(-90)")
-    	.attr("y", 6)
-    	.attr("dy", ".71em")
-    	.style("text-anchor", "end")
-    	.text("Price ($)");
+        svg.append("g")
+        .attr("class", "y axis")
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Price ($)");
 
 
 
@@ -126,19 +126,19 @@ g text{
 
     });
 
-	//var svg = d3.select("body").selectAll("div").data(data).enter().append("svg")
+    //var svg = d3.select("body").selectAll("div").data(data).enter().append("svg")
     //        .attr("width", width + "px")
     //        .attr("height", height + "px")
     //        .append("g")
     //        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     function draw(data) {
-    	x.domain(data.map(close.accessor().d));
-    	y.domain(techan.scale.plot.ohlc(data, close.accessor()).domain());
+        x.domain(data.map(close.accessor().d));
+        y.domain(techan.scale.plot.ohlc(data, close.accessor()).domain());
 
-    	svg.selectAll("g.close").datum(data).call(close);
-    	svg.selectAll("g.x.axis").call(xAxis);
-    	svg.selectAll("g.y.axis").call(yAxis);
+        svg.selectAll("g.close").datum(data).call(close);
+        svg.selectAll("g.x.axis").call(xAxis);
+        svg.selectAll("g.y.axis").call(yAxis);
     }
 
 </script>
